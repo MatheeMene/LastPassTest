@@ -1,18 +1,22 @@
 import React from 'react';
 
-import Password from '../../../assets/password.png';
-import Edit from '../../../assets/edit.png'
+import PasswordIcon from '../../../assets/password.png';
+import EditIcon from '../../../assets/edit.png'
 
 import Button from '../Button/Button';
 
 import './Card.scss';
 
-const Card: React.FC = () => {
+interface CardProps {
+    title: string;
+};
+
+const Card: React.FC<CardProps> = ({ title }) => {
     return (
         <div className='container'>
-            <h4 className='card-title'>Title</h4>
-            <img alt='password-icon' src={Password} className='password-icon' />
-            <Button icon={Edit} iconDescription='edit-icon' />
+            <h4 className='card-title'>{ title }</h4>
+            <img alt='password-icon' src={PasswordIcon} className='password-icon' />
+            <Button icon={EditIcon} iconDescription='edit-icon' />
         </div>
     );
 };
