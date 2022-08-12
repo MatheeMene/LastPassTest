@@ -1,3 +1,7 @@
+body {
+    font-family: sans-serif;
+}
+
 .header {
     width: 100%;
     display: flex;
@@ -5,11 +9,64 @@
     align-items: center;
     justify-content: space-between;
     height: 50px;
-    background-color: red;
+    background: linear-gradient(90deg, rgba(241, 78, 78, 0.757) 0%, rgba(204,129,228,0.4738270308123249) 47%, rgba(133,25,221,0.5466561624649859) 100%);
+
+    .register-password-button {
+        padding: 10px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        margin-right: 3%;
+        height: 35px;
+        border-radius: 10px;
+        background-color: transparent;
+        color: white;
+        border: 3px solid white;
+        transition: .5s;
+        cursor: pointer;
+    }
+
+    .register-password-button:hover {
+        background-color: white;
+        color: rgba(238, 32, 128, 0.699);
+        border-color: rgba(238, 32, 128, 0.699);
+        transition: .5s;
+    }
 }
 
 .close-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 40px;
-    padding: 10px;
+    height: 40px;
     border-radius: 20px;
+    border: none;
+    background-color: white;
+    font-size: 20px;
+    color: rgba(241, 78, 78, 0.757);
+    cursor: pointer;
+}
+
+.add-password-title {
+    text-align: center;
+    color: rgba(133,25,221,0.5466561624649859);
+}
+
+.add-password-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    margin-top: 15px;
+    font-size: 16px;
+    background: linear-gradient(90deg, rgba(241, 78, 78, 0.757) 0%, rgba(204,129,228,0.4738270308123249) 47%, rgba(133,25,221,0.5466561624649859) 100%);
+    border-radius: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
 }

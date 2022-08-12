@@ -2,57 +2,61 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import ReactModal from 'react-modal';
 
+import Logo from '../Logo/Logo';
+import Button from '../Button/Button';
+import useAddNewCard from '../../../hooks/useAddNewCard';
+
 import './Header.scss';
 
-import Logo from '../Logo/Logo';
+const textFieldData = (
+    setUrl: any,
+    setSiteName: any,
+    setUsername: any,
+    setPassword: any,
+) => {
+    return [
+        { placeholder: 'Insira a URL', label: 'URL', setter: setUrl },
+        { placeholder: 'Insira o nome do site', label: 'Nome do Site', setter: setSiteName },
+        { placeholder: 'Insira seu username', label: 'Username', setter: setUsername },
+        { placeholder: 'Insira sua senha', label: 'Senha', setter: setPassword },
+    ];
+};
 
 const Header: React.FC = () => {
     const [url, setUrl] = useState<string>('');
     const [siteName, setSiteName] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
     const [openModal, setOpenModal] = useState<boolean>(false);
 
+    const { handleSubmit } = useAddNewCard();
     const handleChange = (setValue: Function, value: string) => setValue(value);
 
-    const requestData = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-            {
-                url: url,
-                siteName: siteName,
-                userName: username,
-                password: password,
-            }),
-        };
+    const toogleModal = () => setOpenModal(prevState => !prevState);
 
-    // FAZER REQUEST FORA DO COMPONENT
     // DEVOLVER RESPONSTA POSITIVA PRO USER
     // LIMPAR CAMPOS E FECHAR MODAL
     // FAZER ERRO
-    const handleSubmit = () => {
-        fetch('http://localhost:5000/password-cards', requestData)
-            .then(response => console.log('response', response));
-    };
-
     return (
         <header className='header'>
             <Logo />
-            <button onClick={() => setOpenModal(prevState => !prevState)}>Cadastrar senha</button>
+            <Button title='Cadastrar Senha' onClick={toogleModal} styles='register-password-button' />
             {/* FIX MODAL ERROR */}
-            <ReactModal
-                style={{ content: {
-                    display: 'flex', flexDirection: 'column', width: '30%', height: '35%', top: '30%', left: '40%' } }}
+            <ReactModal style={{ content: {display: 'flex', flexDirection: 'column', width: '30%', height: '42%', top: '30%', left: '40%' } }}
                 isOpen={openModal}>
-                    <button onClick={() => setOpenModal(prevState => !prevState)} className='close-button'>X</button>
-                    <h1>Cadastre sua nova senha</h1>
-                    <TextField margin='normal' placeholder='Insira a URL' variant='standard' label='URL' onChange={(event) => handleChange(setUrl, event?.target?.value)} />
-                    <TextField margin='normal' placeholder='Insira o nome do site' variant='standard' label='Nome do site' onChange={(event) => handleChange(setSiteName, event?.target?.value)} />
-                    <TextField margin='normal' placeholder='Insira seu username' variant='standard' label='Username' onChange={(event) => handleChange(setUsername, event?.target?.value)} />
-                    <TextField margin='normal' placeholder='Insira sua senha' variant='standard' label='Senha' onChange={(event) => handleChange(setPassword, event?.target?.value)} />
-                    <input type='submit' onClick={handleSubmit} />
+                    <Button title='X' onClick={toogleModal} styles='close-button' />
+                    <h1 className='add-password-title'>Cadastre sua nova senha</h1>
+                    { textFieldData(setUrl, setSiteName, setUsername, setPassword).map((item, index) => (
+                        <TextField
+                            placeholder={item.placeholder}
+                            label={item.label}
+                            onChange={(event) => handleChange(item.setter, event?.target?.value)}
+                            key={index}
+                            margin='normal'
+                            variant='standard'
+                        />
+                    )) }
+                <Button title='Salvar' onClick={(event) => handleSubmit(event, url, siteName, username, password)} styles='add-password-submit' />
             </ReactModal>
         </header>
     );

@@ -35,7 +35,7 @@ router.post('/password-cards', (req, res) => {
     const { userName } = req.body;
     const { password } = req.body;
     
-    store.setAll({ url, siteName, userName, password });
+    store.set(siteName, { url, siteName, userName, password });
     console.log(store.getAll());
 });
 
