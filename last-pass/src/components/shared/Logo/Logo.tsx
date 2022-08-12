@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Logo: React.FC = () => (
-    <div>
-        <a href='##'>LastPass</a>
-    </div>
-);
+import './Logo.scss';
+
+const Logo: React.FC = () => <h1 className='logo-title'>LastPass</h1>;
 
 export default Logo;

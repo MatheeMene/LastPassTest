@@ -2,21 +2,28 @@ import React, { useState, useEffect } from 'react';
 
 import Card from '../shared/Card/Card';
 
+import './List.scss';
+
 const List: React.FC = () => {
-    const [cardTitle, setCardTitle] = useState<string>('');
+    const [cardTitle, setCardTitle] = useState<any[]>([]);
+
+    const getCardData = async () => {
+        const getCardTitle = await fetch('http://localhost:5000/password-cards');
+        const body = await getCardTitle.json();
+        setCardTitle(Object.values(body));
+    };
 
     useEffect(() => {
-        const getCardData = async () => {
-            const getCardTitle = await fetch('http://localhost:5000/password-cards');
-            const body = await getCardTitle.json();
-            console.log(body);
-        };
         getCardData();        
-    }, [])
+    }, []);
 
     return (
-        <section>
-            <Card title='aaaa' />
+        <section className='cards-wrapper'>
+            { cardTitle.map((item) => {
+                return (
+                    <Card title={item.siteName} />
+                )
+            })}
         </section>
     );
 };
